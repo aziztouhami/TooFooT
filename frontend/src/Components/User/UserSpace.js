@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Navbar from "./Navbar.js";
+import LogoutButton from "./LogoutButton"; 
+import "./UserSpace.css";
 
 const UserSpace = () => {
-  const [userData, setUserData] = useState({ score: 0, niveau: "Débutant" });
+  const [userData, setUserData] = useState({ score: 0, level: "Beginner" });
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
-  const [pseudo, setPseudo] = useState('');
-
   useEffect(() => {
-    const fetchPseudo = async () => {
+    const fetchUsername = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8000/api/pseudo', {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:8000/api/username", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setPseudo(response.data.pseudo);
+        setUsername(response.data.username);
       } catch (error) {
-        console.error('Erreur lors de la récupération du pseudo:', error);
+        console.error("Error fetching username:", error);
       }
     };
 
-    fetchPseudo();
+    fetchUsername();
   }, []);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -30,62 +33,55 @@ const UserSpace = () => {
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
-        const response = await axios.get("http://localhost:8000/api/profile", config);
+        const response = await axios.get(
+          "http://localhost:8000/api/profile",
+          config
+        );
         setUserData(response.data);
       } catch (error) {
-        console.error("Erreur lors de la récupération des données utilisateur:", error);
-        navigate("/"); // Redirige vers la page de connexion si l'utilisateur n'est pas authentifié
+        console.error("Error fetching user data:", error);
+        navigate("/"); 
       }
     };
 
     fetchUserData();
   }, [navigate]);
 
-  return (<div>
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      
-        <span>{pseudo}</span>
-        <img
-          src="/profile-icon.png" // Remplacez par le chemin de votre icône
-          alt="Profile"
-          style={{ cursor: 'pointer', marginLeft: '10px' }}
-          onClick={() => navigate('/profile')}
-        />
-     
-    </div>
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h1>Bienvenue dans votre espace utilisateur</h1>
-      <p>Score : <strong>{userData.score}</strong></p>
-      <p>Niveau : <strong>{userData.niveau}</strong></p>
-      <div style={{ marginTop: "20px" }}>
-        <button
-          style={{
-            padding: "10px 20px",
-            marginRight: "10px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-          onClick={() => navigate("/ranking")}
-        >
-          Ranking
-        </button>
-        <button
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#6c757d",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-          onClick={() => navigate('/game')}
-        >
-Démarrer le Jeu        </button>
+  return (
+    <div className="user-space">
+      <Navbar username={username} />
+      <div className="user-space-content">
+        <h1>Welcome to Your Space ⚽</h1>
+        <h3>Let the game begin!</h3>
+        <div className="containerw">
+          <p className="titleIcon">🏆</p>
+          <p>
+            Ranking : <span >{userData.ranking}</span>
+          </p>
+          <p>
+            Score : <span>{userData.score}</span>
+          </p>
+          <p>
+            Level : <span>{userData.level}</span>
+          </p>
+          <div className="buttons">
+            <button
+              className="btn btn-ranking"
+              onClick={() => navigate("/user/ranking")}
+            >
+              Ranking
+            </button>
+            <button
+              className="btn btn-start-game"
+              onClick={() => navigate("/user/game")}
+            >
+              Start Game
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <LogoutButton buttonColor="#FFFFFF" />
     </div>
   );
 };

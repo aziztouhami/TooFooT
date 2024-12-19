@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
+import './AddPlayer.css';
+import playerImage from '../../Assets/Other Player.png'
+import returnAdd from '../../Assets/Return.png'
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 const AddPlayer = () => {
+    const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
-    nom: "",
-    prenom: "",
+    lastname: "",
+    firstname: "",
     nicknames: "",
-    niveauDifficulte: "",
+    difficultyLevel: "",
     description: "",
   });
 
@@ -28,17 +35,17 @@ const AddPlayer = () => {
 
   const validateForm = () => {
     let errors = {};
-    if (!formData.nom) errors.nom = "Nom est requis.";
-    if (!formData.prenom) errors.prenom = "Prénom est requis.";
-    if (!formData.nicknames) errors.nicknames = "Surnoms sont requis.";
-    if (!formData.niveauDifficulte || isNaN(formData.niveauDifficulte)) {
-      errors.niveauDifficulte = "Le niveau de difficulté doit être un nombre.";
+    if (!formData.lastname) errors.lastname = "Last name is required.";
+    if (!formData.firstname) errors.firstname = "First name is required.";
+    if (!formData.nicknames) errors.nicknames = "Nicknames are required.";
+    if (!formData.difficultyLevel || isNaN(formData.difficultyLevel)) {
+      errors.difficultyLevel = "Difficulty level must be a number.";
     }
-    if (!imageCache) errors.imageCache = "L'image cache est requise.";
-    if (!image) errors.image = "L'image est requise.";
-    if (!formData.description) errors.description = "Description est requise.";
+    if (!imageCache) errors.imageCache = "Image cache is required.";
+    if (!image) errors.image = "Image is required.";
+    if (!formData.description) errors.description = "Description is required.";
     else if (formData.description.length > 500) {
-      errors.description = "Description ne doit pas dépasser 500 caractères.";
+      errors.description = "Description must not exceed 500 characters.";
     }
     setError(errors);
     return Object.keys(errors).length === 0;
@@ -52,10 +59,10 @@ const AddPlayer = () => {
     if (!validateForm()) return;
 
     const data = new FormData();
-    data.append("nom", formData.nom);
-    data.append("prenom", formData.prenom);
+    data.append("lastname", formData.lastname);
+    data.append("firstname", formData.firstname);
     data.append("nicknames", formData.nicknames);
-    data.append("niveauDifficulte", formData.niveauDifficulte);
+    data.append("difficultylevel", formData.difficultyLevel);
     data.append("description", formData.description);
     data.append("imageCache", imageCache);
     data.append("image", image);
@@ -67,107 +74,130 @@ const AddPlayer = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setSuccess("Le joueur a été ajouté avec succès !");
+      setSuccess("Player added successfully!");
       setFormData({
-        nom: "",
-        prenom: "",
+        lastname: "",
+        firstname: "",
         nicknames: "",
-        niveauDifficulte: "",
+        difficultyLevel: "",
         description: "",
       });
       setImageCache(null);
       setImage(null);
     } catch (err) {
-      setError({ general: "Une erreur est survenue lors de l'ajout du joueur." });
+      setError({ general: "An error occurred while adding the player." });
     }
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-      <h2>Ajouter un joueur</h2>
-      {success && <p style={{ color: "green" }}>{success}</p>}
-      {error.general && <p style={{ color: "red" }}>{error.general}</p>}
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div>
-          <label>Nom :</label>
+    <div className="add-space">
+             <button className="return-add" onClick={()=>navigate('/admin')}> <img src={returnAdd} alt="Player" className="add-return-img" /></button>
+
+      <h2 className="add-title">Add a Player</h2>
+      
+      <div className="add-container">
+      
+      <div className="add-fields">
+        <img src={playerImage} alt="Player" className="add-player-img" />
+        
+      <form className="form-add" onSubmit={handleSubmit} encType="multipart/form-data">
+      <div className="div5">
+      <div>
+          <label>First Name:</label>
           <input
             type="text"
-            name="nom"
-            value={formData.nom}
+            name="firstname"
+            className="add-input"
+            value={formData.firstname}
             onChange={handleChange}
             style={{ display: "block", marginBottom: "10px" }}
           />
-          {error.nom && <span style={{ color: "red" }}>{error.nom}</span>}
+          {error.firstname && <span style={{ color: "red" ,marginTop:'-1vh'}}>{error.firstname}</span>}
         </div>
         <div>
-          <label>Prénom :</label>
+          <label>Last Name:</label>
           <input
             type="text"
-            name="prenom"
-            value={formData.prenom}
+            name="lastname"
+            className="add-input"
+            value={formData.lastname}
             onChange={handleChange}
             style={{ display: "block", marginBottom: "10px" }}
           />
-          {error.prenom && <span style={{ color: "red" }}>{error.prenom}</span>}
+          {error.lastname && <span style={{ color: "red",marginTop:'-1vh' }}>{error.lastname}</span>}
+        </div>
+        
         </div>
         <div>
-          <label>Surnoms (séparés par des virgules) :</label>
+          <label>Nicknames (separated by commas):</label>
           <input
             type="text"
             name="nicknames"
+            className="add-input"
             value={formData.nicknames}
             onChange={handleChange}
             style={{ display: "block", marginBottom: "10px" }}
           />
-          {error.nicknames && <span style={{ color: "red" }}>{error.nicknames}</span>}
+          {error.nicknames && <span style={{ color: "red",marginTop:'-1vh' }}>{error.nicknames}</span>}
         </div>
         <div>
-          <label>Niveau de difficulté :</label>
+          <label>Difficulty Level:</label>
           <input
             type="number"
-            name="niveauDifficulte"
-            value={formData.niveauDifficulte}
+            name="difficultyLevel"
+            className="add-input"
+
+            value={formData.difficultyLevel}
             onChange={handleChange}
             style={{ display: "block", marginBottom: "10px" }}
           />
-          {error.niveauDifficulte && (
-            <span style={{ color: "red" }}>{error.niveauDifficulte}</span>
+          {error.difficultyLevel && (
+            <span style={{ color: "red",marginTop:'-1vh' }}>{error.difficultyLevel}</span>
           )}
         </div>
         <div>
-          <label>Image Cache :</label>
+          <label>Description:</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            className="add-input"
+            onChange={handleChange}
+            style={{ display: "block", marginBottom: "10px", width: "100%" }}
+          ></textarea>
+          {error.description && <span style={{ color: "red",marginTop:'-1vh' }}>{error.description}</span>}
+        </div>
+        <div className="div5">
+        <div>
+          <label>Image Cache:</label>
           <input
             type="file"
             name="imageCache"
             onChange={handleFileChange}
-            style={{ display: "block", marginBottom: "10px" }}
+            style={{ display: "block",marginBottom: "10px" }}
           />
-          {error.imageCache && <span style={{ color: "red" }}>{error.imageCache}</span>}
+          {error.imageCache && <span style={{ color: "red",marginTop:'-1vh' }}>{error.imageCache}</span>}
         </div>
         <div>
-          <label>Image :</label>
+          <label>Image:</label>
           <input
             type="file"
             name="image"
             onChange={handleFileChange}
             style={{ display: "block", marginBottom: "10px" }}
           />
-          {error.image && <span style={{ color: "red" }}>{error.image}</span>}
+          {error.image && <span style={{ color: "red" ,marginTop:'-1vh'}}>{error.image}</span>}
         </div>
-        <div>
-          <label>Description :</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            style={{ display: "block", marginBottom: "10px", width: "100%" }}
-          ></textarea>
-          {error.description && <span style={{ color: "red" }}>{error.description}</span>}
         </div>
-        <button type="submit" style={{ padding: "10px 20px", background: "#007bff", color: "#fff" }}>
-          Ajouter
+        
+        <button type="submit" className="add-submit">
+          Add
         </button>
+        {success && <p style={{ color: "green" ,marginLeft:'17vh'}}>{success}</p>}
+      {error.general && <p style={{ color: "red",marginLeft:'17vh' }}>{error.general}</p>}
       </form>
+      </div>
+
+      </div>
     </div>
   );
 };

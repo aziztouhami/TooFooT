@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  nom: {
+  lastname: {
     type: String,
     required: true,
   },
-  prenom: {
+  firstname: {
     type: String,
     required: true,
   },
-  pseudo: {
+  username: {
     type: String,
     required: true,
     unique: true,
   },
-  classement: {
+  ranking: {
     type: Number,
     default: null,
   },
@@ -38,13 +38,13 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  niveau: {
+  level: {
     type: Number,
-    default: 0, // Niveau initial
+    default: 0, 
   },
   tryNumber: {
     type: Number,
-    default: 5, // Nombre d'essais par défaut
+    default: 5, 
   },
 }, { timestamps: true });
 

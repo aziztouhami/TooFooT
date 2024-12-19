@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from './Navbar';
+import LogoutButton from './LogoutButton';
+import './OtherPlayerProfile.css';
+import otherPlayerImage from '../Assets/profileicon.png';
 
 const OtherPlayerProfile = () => {
-  const { id } = useParams(); // Récupère l'id du joueur depuis l'URL
+  const { id } = useParams(); 
   const [player, setPlayer] = useState(null);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const fetchPlayerProfile = async () => {
@@ -15,24 +20,52 @@ const OtherPlayerProfile = () => {
         });
         setPlayer(response.data);
       } catch (error) {
-        console.error('Erreur lors de la récupération du profil du joueur:', error);
+        console.error('Error fetching player profile:', error);
       }
     };
 
     fetchPlayerProfile();
   }, [id]);
 
-  if (!player) return <p>Chargement...</p>;
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:8000/api/username", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUsername(response.data.username);
+      } catch (error) {
+        console.error("Error fetching username:", error);
+      }
+    };
+
+    fetchUsername();
+  }, []);
+
+  if (!player) return <p>Loading...</p>;
 
   return (
-    <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
-      <h2>Profil du joueur</h2>
-      <p><strong>Nom:</strong> {player.nom}</p>
-      <p><strong>Prénom:</strong> {player.prenom}</p>
-      <p><strong>Pseudo:</strong> {player.pseudo}</p>
-      <p><strong>Score:</strong> {player.score}</p>
-      <p><strong>Classement:</strong> {player.classement}</p>
-      <p><strong>Niveau:</strong> {player.niveau}</p>
+    <div className="player-style">
+      <Navbar username={username} />
+      <div className='player-background'>
+      <div className="profile-wrap">
+        <img src={otherPlayerImage} alt="Player" className="player" />
+        <h2 className='username1'>{player.username}</h2>
+        <div className="div3">
+          
+        <p className='profile-name' style={{marginRight:'3px'}}>{player.firstname}</p>
+        
+       
+        <p className='profile-name'  style={{marginLeft:'3px'}}> {player.lastname}</p>
+        
+        </div>
+        <p className='player-ach'><strong>Ranking :</strong> <span>{player.ranking}</span></p>
+        <p className='player-ach'><strong>Score :</strong><span> {player.score}</span></p>
+        <p className='player-ach'><strong>Level :</strong><span> {player.level}</span></p>
+      </div>
+      <LogoutButton buttonColor="#FFFFFF" />
+      </div>
     </div>
   );
 };

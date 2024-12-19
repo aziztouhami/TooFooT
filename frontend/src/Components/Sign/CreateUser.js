@@ -1,152 +1,172 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './CreateUser.css';
+import logo from "../Assets/logo.png";
+import { Link } from 'react-router-dom';
+
 
 const CreateUser = () => {
   const [formData, setFormData] = useState({
-    nom: '',
-    prenom: '',
-    pseudo: '',
+    lastname: '',
+    firstname: '',
+    username: '',
     email: '',
     password: '',
   });
 
   const [errors, setErrors] = useState({});
-  const [isFormValid, setIsFormValid] = useState(false); // État du bouton Submit
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  // Fonction pour vérifier si le champ pseudo est disponible
-  const validatePseudo = async () => {
-    if (!formData.pseudo) return;
-    try {
-      await axios.post('http://localhost:8000/api/check-pseudo', { pseudo: formData.pseudo });
-      setErrors((prev) => ({ ...prev, pseudo: '' }));
+  const validateusername = async () => {
+    if (!formData.username) return;
+    try {console.log(formData.username)
+      await axios.post('http://localhost:8000/api/check-username', { username: formData.username });
+      setErrors((prev) => ({ ...prev, username: '' }));
     } catch (err) {
-      setErrors((prev) => ({ ...prev, pseudo: err.response?.data?.message || 'Erreur avec le pseudo.' }));
+      setErrors((prev) => ({ ...prev, username: err.response?.data?.message || 'username is already taken.' }));
     }
   };
 
-  // Fonction pour vérifier si l'email est disponible
   const validateEmail = async () => {
     if (!formData.email) return;
     try {
+      
       await axios.post('http://localhost:8000/api/check-email', { email: formData.email });
       setErrors((prev) => ({ ...prev, email: '' }));
     } catch (err) {
-      setErrors((prev) => ({ ...prev, email: err.response?.data?.message || 'Erreur avec l\'email.' }));
+      setErrors((prev) => ({ ...prev, email: err.response?.data?.message || 'Email is already taken.' }));
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrors((prev) => ({ ...prev, [name]: '' })); // Réinitialise l'erreur du champ
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   const handleBlur = (e) => {
     const { name } = e.target;
-    if (name === 'pseudo') validatePseudo();
+    if (name === 'username') validateusername();
     if (name === 'email') validateEmail();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData)
       const response = await axios.post('http://localhost:8000/api/users', formData);
       alert(response.data.message);
-      setFormData({ nom: '', prenom: '', pseudo: '', email: '', password: '' });
+      setFormData({ lastname: '', firstname: '', username: '', email: '', password: '' });
       setErrors({});
     } catch (err) {
-      alert('Erreur lors de la création de l’utilisateur, Vérifie tout les fields');
+      alert('Error creating the user. Please check all the fields.');
     }
   };
 
   useEffect(() => {
-    // Vérifie si tous les champs sont valides
     const noErrors = Object.values(errors).every((error) => !error);
     const allFieldsFilled = Object.values(formData).every((value) => value.trim() !== '');
     setIsFormValid(noErrors && allFieldsFilled);
   }, [errors, formData]);
 
   return (
-    <div>
-      <h1>Créer un nouvel utilisateur</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="create-user-container">
+      <div className="photo1"></div>
+      <div className="form-container1">
+      <img src={logo} alt="Logo" className="Logo1" />
+      <div className="form-wrapper1">
+      <form onSubmit={handleSubmit } >
+        <div className="form-wrapper11">
+        <div className="div1">
+       <div>
+        <label htmlFor="firstName">First Name </label>
           <input
             type="text"
-            name="nom"
-            placeholder="Nom"
-            value={formData.nom}
+            className="input1"
+            id="firstName"
+            name="firstname"
+            value={formData.firstname}
             onChange={handleChange}
             required
           />
         </div>
+        <div >
 
-        <div>
+        <label htmlFor="lastName">Last Name </label>
           <input
             type="text"
-            name="prenom"
-            placeholder="Prénom"
-            value={formData.prenom}
+            id="lastName"
+            className="input1"
+            name="lastname"
+            value={formData.lastname}
             onChange={handleChange}
             required
           />
+        </div>   
         </div>
 
-        <div>
+        <div className="div11">
+          <label htmlFor="username">UserName</label>
           <input
             type="text"
-            name="pseudo"
-            placeholder="Pseudo"
-            value={formData.pseudo}
+            name="username"
+            className="input1"
+            id="username"
+            value={formData.username}
             onChange={handleChange}
             onBlur={handleBlur}
             required
           />
-          {errors.pseudo && <p style={{ color: 'red' }}>{errors.pseudo}</p>}
+          {errors.username && <span className="error-message">{errors.username}</span>}
         </div>
 
-        <div>
+        <div className="div11">
+        <label htmlFor="email">Email</label>
           <input
             type="email"
             name="email"
-            placeholder="E-mail"
+            className="input1"
+            id="email"
             value={formData.email}
             onChange={handleChange}
             onBlur={handleBlur}
             required
           />
-          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+          {errors.email && <span className="error-message">{errors.email}</span>}
         </div>
 
-        <div>
+        <div className="div11">
+        <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
-            placeholder="Mot de passe"
+            className="input1"
+            id="password"
             value={formData.password}
             onChange={handleChange}
             required
           />
           {formData.password.length > 0 &&
             (formData.password.length < 8 ? (
-              <p style={{ color: 'red' }}>Le mot de passe doit contenir au moins 8 caractères.</p>
+              <span className="error-message">Password must be at least 8 characters long.</span>
             ) : (
-              <p style={{ color: 'green' }}>Mot de passe valide.</p>
+              <span className="success-message">Password is valid.</span>
             ))}
         </div>
 
         <button
           type="submit"
-          style={{
-            backgroundColor: isFormValid ? 'green' : 'red',
-            color: 'white',
-            cursor: isFormValid ? 'pointer' : 'not-allowed',
-          }}
+          className={`submit-button ${isFormValid ? 'valid' : 'invalid'}`}
           disabled={!isFormValid}
         >
-          Créer
-        </button>
+Create account        </button>
+<h5 className="h51">Already have an account ? <Link to="/" className="create-account-link1">
+Login
+  </Link></h5>
+</div>
       </form>
+      </div>
+      </div>
     </div>
   );
 };

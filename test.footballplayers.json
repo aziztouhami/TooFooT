@@ -1,0 +1,86 @@
+[{
+  "_id": {
+    "$oid": "67436d34230ede6e40e6a2b5"
+  },
+  "nom": "cr7",
+  "prenom": "cr7",
+  "nicknames": [
+    "cr7",
+    "cr8",
+    "cr9"
+  ],
+  "niveauDifficulte": 1,
+  "imageCache": "1732472116548-461204775.png",
+  "image": "1732472116554-250931241.png",
+  "description": "cr7",
+  "createdAt": {
+    "$date": "2024-11-24T18:15:16.580Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-26T20:09:25.718Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67436d4d230ede6e40e6a2b7"
+  },
+  "nom": "messi",
+  "prenom": "messi",
+  "nicknames": [
+    "messo"
+  ],
+  "niveauDifficulte": 1,
+  "imageCache": "1732472141289-495408927.png",
+  "image": "1732472141296-188061721.png",
+  "description": "messi",
+  "createdAt": {
+    "$date": "2024-11-24T18:15:41.302Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-24T18:15:41.302Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67436d6a230ede6e40e6a2b9"
+  },
+  "nom": "maradona",
+  "prenom": "maradona",
+  "nicknames": [
+    "maradone"
+  ],
+  "niveauDifficulte": 1,
+  "imageCache": "1732472170540-962640610.png",
+  "image": "1732472170552-849805966.png",
+  "description": "maradona",
+  "createdAt": {
+    "$date": "2024-11-24T18:16:10.571Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-24T18:16:10.571Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67436d7d230ede6e40e6a2bb"
+  },
+  "nom": "pele",
+  "prenom": "pele",
+  "nicknames": [
+    "pele"
+  ],
+  "niveauDifficulte": 1,
+  "imageCache": "1732472189345-21223923.png",
+  "image": "1732472189360-127475022.png",
+  "description": "pele",
+  "createdAt": {
+    "$date": "2024-11-24T18:16:29.378Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-24T18:16:29.378Z"
+  },
+  "__v": 0
+}]

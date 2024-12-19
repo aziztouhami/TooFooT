@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./UserList.css"; 
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Récupérer la liste des utilisateurs depuis l'API
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -18,8 +18,8 @@ const UserList = () => {
         });
         setUsers(response.data);
       } catch (error) {
-        console.error("Erreur lors de la récupération des utilisateurs :", error);
-        alert("Impossible de récupérer les utilisateurs.");
+        console.error("Error fetching users:", error);
+        alert("Unable to fetch users.");
       } finally {
         setLoading(false);
       }
@@ -27,9 +27,8 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
-  // Supprimer un utilisateur
   const handleDelete = async (id) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+    if (window.confirm("Are you sure you want to delete this user?")) {
       try {
         const token = localStorage.getItem("token");
         await axios.delete(`http://localhost:8000/api/user/${id}`, {
@@ -38,15 +37,14 @@ const UserList = () => {
           },
         });
         setUsers(users.filter((user) => user._id !== id));
-        alert("Utilisateur supprimé avec succès !");
+        alert("User successfully deleted!");
       } catch (error) {
-        console.error("Erreur lors de la suppression de l'utilisateur :", error);
-        alert("Erreur lors de la suppression de l'utilisateur.");
+        console.error("Error deleting user:", error);
+        alert("Error deleting user.");
       }
     }
   };
 
-  // Changer le rôle d'un utilisateur
   const handleToggleRole = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -61,55 +59,56 @@ const UserList = () => {
       );
       const updatedUser = response.data.user;
       setUsers(users.map((user) => (user._id === id ? updatedUser : user)));
-      alert("Rôle mis à jour avec succès !");
+      alert("Role updated successfully!");
     } catch (error) {
-      console.error("Erreur lors de la mise à jour du rôle :", error);
-      alert("Erreur lors de la mise à jour du rôle.");
+      console.error("Error updating role:", error);
+      alert("Error updating role.");
     }
   };
 
   if (loading) {
-    return <p>Chargement des utilisateurs...</p>;
+    return <p>Loading users...</p>;
   }
 
   return (
-    <div>
-      <h1>Gestion des Utilisateurs</h1>
-      <table border="1" cellPadding="10" style={{ width: "100%", textAlign: "center" }}>
+    <div className="user-list-container">
+      <table className="user-table">
         <thead>
           <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Pseudo</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
             <th>Email</th>
             <th>Score</th>
-            <th>Classement</th>
-            <th>Rôle</th>
+            <th>Level</th>
+            <th>Admin</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              <td>{user.nom}</td>
-              <td>{user.prenom}</td>
-              <td>{user.pseudo}</td>
-              <td>{user.email}</td>
-              <td>{user.score}</td>
-              <td><td>{user.classement ?? "-"}</td>
+              <td style={{maxWidth: '3vh'}} >{user.firstname}</td>
+              <td style={{maxWidth: '3vh'}} >{user.lastname}</td>
+              <td style={{maxWidth: '3vh'}} >{user.username}</td>
+              <td style={{maxWidth: '8vh'}} >{user.email}</td>
+              <td style={{maxWidth: '1vh'}} >{user.score}</td>
+              <td style={{maxWidth: '1vh'}} >{user.level ?? "-"}</td>
+              <td>
+              <label className="toggle-switch">
+  <input
+    type="checkbox"
+    checked={user.role === "admin"}
+    onChange={() => handleToggleRole(user._id)}
+  />
+  <span className="slider"></span>
+</label>
+
               </td>
               <td>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={user.role === "admin"}
-                    onChange={() => handleToggleRole(user._id)}
-                  />
-                  {user.role === "admin" ? "Admin" : "Utilisateur"}
-                </label>
-              </td>
-              <td>
-                <button onClick={() => handleDelete(user._id)}>Supprimer</button>
+                <button className="delete-button" onClick={() => handleDelete(user._id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+.user-space {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+
+  .user-space-content {
+    background-image: url("../Assets/background1.png"); 
+    background-size: cover;
+    background-position:100% 80%;
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    gap:0vh;
+    align-items: center; 
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .user-space-content h1 {
+    margin-bottom:-3vh;
+    color:white;
+    font-family: "Roboto", sans-serif;
+font-size: 64px;
+font-weight: 700;
+line-height: 75px;
+text-align: center;
+
+  }
+  .user-space-content h3 {
+    color:#7CD8FF;
+    font-family: "Roboto", sans-serif;
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 56.25px;
+    text-align: center;
+
+    
+
+  }
+  .containerw{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+
+    background-color: white;
+    height: 45vh;
+    width: 70vh;
+    margin-bottom: 20vh;
+    border-radius: 20px;
+  }
+  .titleIcon{
+    font-family: "Roboto", sans-serif;
+font-size: 64px;
+font-weight: 300;
+line-height: 75px;
+text-align: center;
+
+
+  }
+  
+  .user-space-content p {
+    margin: 10px 0;
+    color: #00025D;
+    font-family: "Roboto", sans-serif;
+font-size: 40px;
+font-weight: 500;
+line-height: 46.88px;
+text-align: center;
+
+
+  }
+  .user-space-content span {
+    margin-left: 10px;
+    color: #0094D3;
+    font-family: "Roboto", sans-serif;
+font-size: 40px;
+font-weight: 400;
+line-height: 46.88px;
+text-align: center;
+
+
+
+
+  }
+  
+  .buttons {
+    margin-top: 20px;
+  }
+  
+  .btn {
+    height:8vh;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 37.32px;
+    text-align: center;
+    
+  }
+  
+  .btn-ranking {width: 214.28px;
+    height: 65px;
+    top: 841px;
+    left: 682px;
+    gap: 0px;
+    border-radius: 15px ;
+    opacity: 0px;
+    
+    background-color: #767676;
+  }
+  
+  .btn-ranking:hover {
+    
+    background-color: #5271ff;
+  }
+  
+  .btn-start-game {
+    width: 280px;
+height: 65px;
+top: 841px;
+left: 959px;
+gap: 0px;
+border-radius: 15px;
+opacity: 0px;
+
+    background-color: #0094D3;
+  }
+  
+  .btn-start-game:hover {
+    background-color: #0056b3;
+  }
+
+  
+  
+  
+  

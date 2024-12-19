@@ -1,0 +1,89 @@
+[{
+  "_id": {
+    "$oid": "673efd9d030351ecd79df20b"
+  },
+  "nom": "Touhami",
+  "prenom": "Mohamed Aziz",
+  "pseudo": "2hemi",
+  "classement": 2,
+  "email": "aziztouha19@gmail.com",
+  "password": "azertyui",
+  "OldPlayer": [],
+  "role": "admin",
+  "createdAt": {
+    "$date": "2024-11-21T09:30:05.458Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-26T20:31:46.237Z"
+  },
+  "__v": 0,
+  "niveau": 0,
+  "score": 0,
+  "tryNumber": 5
+},
+{
+  "_id": {
+    "$oid": "6744ae7ebfedace694d11ec7"
+  },
+  "nom": "Touhami",
+  "prenom": "Mohamed Aziz",
+  "pseudo": "az",
+  "classement": 1,
+  "email": "aziztouha179@gmail.com",
+  "password": "azertyui",
+  "role": "user",
+  "score": 9,
+  "niveau": 0,
+  "tryNumber": 4,
+  "createdAt": {
+    "$date": "2024-11-25T17:06:06.695Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-26T20:33:36.306Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67534511d86bccbd359e5c57"
+  },
+  "nom": "ezbjfjef",
+  "prenom": ",nbzbad",
+  "pseudo": "jkzefbkjezkf",
+  "classement": null,
+  "email": "jkezfkjezkfj@jejfejz.com",
+  "password": "k\"jro\"éorio\"r",
+  "role": "user",
+  "score": 0,
+  "niveau": 0,
+  "tryNumber": 5,
+  "createdAt": {
+    "$date": "2024-12-06T18:40:17.574Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-06T18:40:17.574Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6753465ed86bccbd359e5c5b"
+  },
+  "nom": "efez",
+  "prenom": "azd",
+  "pseudo": "efefezfez",
+  "classement": null,
+  "email": "fezfze@fkef.rereg",
+  "password": "j",
+  "role": "user",
+  "score": 0,
+  "niveau": 0,
+  "tryNumber": 5,
+  "createdAt": {
+    "$date": "2024-12-06T18:45:50.622Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-06T18:45:50.622Z"
+  },
+  "__v": 0
+}]

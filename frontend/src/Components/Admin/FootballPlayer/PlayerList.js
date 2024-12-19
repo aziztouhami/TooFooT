@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './PlayerList.css';
+
 
 const PlayerList = () => {
   const [players, setPlayers] = useState([]);
@@ -17,7 +19,7 @@ const PlayerList = () => {
         });
         setPlayers(response.data);
       } catch (error) {
-        console.error("Erreur lors de la récupération des joueurs :", error);
+        console.error("Error fetching players:", error);
       }
     };
 
@@ -34,76 +36,44 @@ const PlayerList = () => {
       });
       setPlayers((prevPlayers) => prevPlayers.filter((player) => player._id !== id));
     } catch (error) {
-      console.error("Erreur lors de la suppression du joueur :", error);
+      console.error("Error deleting player:", error);
     }
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-      <h2>Liste des joueurs</h2>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
+    <div className="player-list-container">
+      <ul className="player-list">
         {players.map((player) => (
-          <li
-            key={player._id}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "10px",
-              border: "1px solid #ccc",
-              padding: "10px",
-              borderRadius: "5px",
-            }}
-          >
-            <div>
-              {player.nom} {player.prenom}
+          <li key={player._id} className="player-item">
+            <div className="player-details">
+              {console.log(player.image)}
+              <img
+                src={`http://localhost:8000/uploads/${player.image}` || "/default-player.jpg"} 
+                alt={`${player.firstname} ${player.lastname}`}
+                className="player-image"
+              />
+              <div className="player-info">
+                {player.firstname} {player.lastname}
+              </div>
             </div>
-            <div>
+            <div className="player-actions">
               <button
                 onClick={() => deletePlayer(player._id)}
-                style={{
-                  backgroundColor: "red",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  padding: "5px 10px",
-                  cursor: "pointer",
-                  marginRight: "5px",
-                }}
+                className="delete-button"
               >
-                Supprimer
+                Delete
               </button>
               <button
-                onClick={() => navigate(`/edit-player/${player._id}`)}
-                style={{
-                  backgroundColor: "#007bff",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  padding: "5px 10px",
-                  cursor: "pointer",
-                }}
+                onClick={() => navigate(`/admin/edit-player/${player._id}`)}
+                className="edit-button"
               >
-                Modifier
+                Edit
               </button>
             </div>
           </li>
         ))}
       </ul>
-      <button
-        onClick={() => navigate("/add-player")}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Ajouter un joueur
-      </button>
+      
     </div>
   );
 };

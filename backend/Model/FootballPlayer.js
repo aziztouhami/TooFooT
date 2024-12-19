@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const footballPlayerSchema = new mongoose.Schema({
-  nom: {
+  firstname: {
     type: String,
     required: true,
   },
-  prenom: {
+  lastname: {
     type: String,
     required: true,
   },
@@ -13,7 +13,7 @@ const footballPlayerSchema = new mongoose.Schema({
     type: [String], 
     required: true,
   },
-  niveauDifficulte: {
+  difficultylevel: {
     type: Number, 
     required: true,
     min: 1, 

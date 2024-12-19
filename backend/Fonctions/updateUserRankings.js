@@ -12,13 +12,13 @@ const updateUserRankings = async () => {
         currentRank = i + 1; 
         lastScore = users[i].score; 
       }//
-      users[i].classement = currentRank; 
+      users[i].ranking = currentRank; 
       await users[i].save(); 
     }
 
-    console.log('Classement des utilisateurs mis à jour avec succès.');
+    console.log('Ranking updated successfully');
   } catch (error) {
-    console.error('Erreur lors de la mise à jour des classements :', error);
+    console.error(' An error occurred :', error);
   }
 };
 

@@ -1,5 +1,8 @@
-
-const mongoose= require('mongoose')
+const mongoose = require('mongoose');
 require('dotenv').config();
-mongoose.connect( process.env.BD).then(()=>console.error('connexion réussie')).catch((err)=>console.error('connexion échouée',err))
-module.exports = mongoose
+
+mongoose.connect(process.env.DB)
+    .then(() => console.error('Connection successful'))
+    .catch((err) => console.error('Connection failed', err));
+
+module.exports = mongoose;
